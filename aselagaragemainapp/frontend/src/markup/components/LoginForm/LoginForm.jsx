@@ -1,91 +1,60 @@
+
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import  loginService  from "../../../services/login.service";
+import { useNavigate } from "react-router-dom";
+import loginService from "../../../services/login.service";
+import { useAuth } from "../../../Context/AuthContext";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [employee_email, setEmail] = useState("");
   const [employee_password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [serverError, setServerError] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // Handle client side validations here
-    let valid = true; // Flag
-    // Email validation
+  const { setIsLogged, setEmployee, setIsAdmin } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validation
+    let valid = true;
     if (!employee_email) {
-      setEmailError("Please enter your email address first");
+      setEmailError("Please enter your email address");
       valid = false;
-    } else if (!employee_email.includes("@")) {
-      setEmailError("Invalid email format");
-    } else {
-      const regex = /^\S+@\S+\.\S+$/;
-      if (!regex.test(employee_email)) {
-        setEmailError("Invalid email format");
-        valid = false;
-      } else {
-        setEmailError("");
-      }
-    }
-    // Password has to be at least 6 characters long
+    } else setEmailError("");
+
     if (!employee_password || employee_password.length < 6) {
       setPasswordError("Password must be at least 6 characters long");
       valid = false;
-    } else {
-      setPasswordError("");
+    } else setPasswordError("");
+
+    if (!valid) return;
+
+    try {
+      const response = await loginService
+        .logIn({ employee_email, employee_password })
+        .then((res) => res.json());
+
+      if (response.status === "success" && response.data.employee_token) {
+        // Store in localStorage
+        localStorage.setItem("employee", JSON.stringify(response.data));
+
+        // Update context first
+        setIsLogged(true);
+        setEmployee(response.data);
+        if (response.data.employee_role === 3) setIsAdmin(true);
+
+        // Use a short delay to let context update before navigation
+        setTimeout(() => {
+          navigate("/"); // Header now sees updated employee instantly
+        }, 0);
+      } else {
+        setServerError(response.message || "Login failed");
+      }
+    } catch (err) {
+      setServerError("An error occurred: " + err);
     }
-    if (!valid) {
-      return;
-    }
-    // Handle form submission here
-    const formData = {
-      employee_email,
-      employee_password,
-    };
-    // console.log(formData);
-    // Call the service
-    const loginEmployee = loginService.logIn(formData);
-
-    // console.log(loginEmployee);
-    loginEmployee
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-        if (response.status === "success") {
-          // Save the user in the local storage
-          if (response.data.employee_token) {
-            // console.log(response.data);
-            localStorage.setItem("employee", JSON.stringify(response.data));
-          }
-
-          // console.log(localStorage.getItem("employee"));
-          // Redirect the user to the dashboard
-          // navigate('/admin');
-          // console.log(location);
-          if (location.pathname === "/login") {
-            // navigate('/admin');
-            // window.location.replace('/admin');
-            // To home for now
-            // window.location.replace("/");
-            navigate("/");
-
-          } else {
-            window.location.reload();
-            // navigate("/");
-
-          }
-        } else {
-          // Show an error message
-          setServerError(response.message);
-        }
-      })
-      .catch((err) => {
-        // console.log(err);
-        setServerError("An error has occurred. Please try again later." + err);
-      });
   };
 
   return (
@@ -102,45 +71,33 @@ function LoginForm() {
                   <div className="row clearfix">
                     <div className="form-group col-md-12">
                       {serverError && (
-                        <div className="validation-error" role="alert">
-                          {serverError}
-                        </div>
+                        <div className="validation-error">{serverError}</div>
                       )}
                       <input
                         type="email"
-                        name="employee_email"
                         value={employee_email}
-                        onChange={(event) => setEmail(event.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
                       />
                       {emailError && (
-                        <div className="validation-error" role="alert">
-                          {emailError}
-                        </div>
+                        <div className="validation-error">{emailError}</div>
                       )}
                     </div>
 
                     <div className="form-group col-md-12">
                       <input
                         type="password"
-                        name="employee_password"
                         value={employee_password}
-                        onChange={(event) => setPassword(event.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
                       />
                       {passwordError && (
-                        <div className="validation-error" role="alert">
-                          {passwordError}
-                        </div>
+                        <div className="validation-error">{passwordError}</div>
                       )}
                     </div>
 
                     <div className="form-group col-md-12">
-                      <button
-                        className="theme-btn btn-style-one"
-                        type="submit"
-                        data-loading-text="Please wait..."
-                      >
+                      <button className="theme-btn btn-style-one" type="submit">
                         <span>Login</span>
                       </button>
                     </div>
@@ -156,3 +113,4 @@ function LoginForm() {
 }
 
 export default LoginForm;
+

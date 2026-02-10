@@ -556,6 +556,10 @@ img {
     font-weight: 700;
     font-size: 22px;
     margin-left: 20px;
+
+}
+.header-top .right-column .welcome-message {
+   margin-right: 20px;
 }
 
 .header-top #polyglotLanguageSwitcher {
@@ -3058,6 +3062,8 @@ img {
 .cta-section .theme-btn:hover {
     color: #fff;
 }
+
+
 
 /* Main Footer */
 

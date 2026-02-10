@@ -20,8 +20,8 @@ function Header(props) {
     // Set the isLogged state to false
     setIsLogged(false);
   };
-//  console.log("isLogged:", isLogged);
-//   console.log("employee:", employee)
+ console.log("isLogged:", isLogged);
+  console.log("employee:", employee)
   return (
     <div>
       <header className="main-header header-style-one">
@@ -35,9 +35,9 @@ function Header(props) {
                 </div>
               </div>
               <div className="right-column">
-                {isLogged ? (
+                {isLogged && employee ? (
                   <div className="link-btn">
-                    <div className="phone-number">
+                    <div className="phone-number welcome-message">
                       <strong>Welcome {employee?.employee_first_name}</strong>
                     </div>
                   </div>
@@ -55,9 +55,9 @@ function Header(props) {
             <div className="inner-container">
               <div className="logo-box">
                 <div className="logo">
-                  <a href="/">
+                  <Link to="/">
                     <img src={logo} alt="" />
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="right-column">
@@ -109,9 +109,7 @@ function Header(props) {
             </div>
           </div>
         </div>
-        
-        
-        
+
         <div className="sticky-header">
           <div className="header-upper">
             <div className="auto-container">
@@ -119,7 +117,7 @@ function Header(props) {
                 <div className="logo-box">
                   <div className="logo">
                     <Link to="/">
-                      <img src="assets/images/custom/logo.png" alt="" />
+                      <img src={logo} alt="" />
                     </Link>
                   </div>
                 </div>
@@ -133,9 +131,9 @@ function Header(props) {
                   </div>
                   <div className="search-btn"></div>
                   <div className="link-btn">
-                    <a href="/login" className="theme-btn btn-style-one">
+                    <Link to="/login" className="theme-btn btn-style-one">
                       Login
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -150,9 +148,9 @@ function Header(props) {
 
           <nav className="menu-box">
             <div className="nav-logo">
-              <a href="index.html">
-                <img src="assets/images/logo-two.png" alt="" title="" />
-              </a>
+              <Link to="/">
+                <img src={logo} alt="" title="" />
+              </Link>
             </div>
             <div className="menu-outer"></div>
           </nav>

@@ -260,3 +260,11 @@ input:disabled {
 .change-status {
   cursor: pointer;
 }
+
+
+/* to fix the right-column style responsive hide */
+@media only screen and (max-width: 1199px){
+    .main-header.header-style-one .header-top .right-column {
+        display: block !important;
+    }
+}
