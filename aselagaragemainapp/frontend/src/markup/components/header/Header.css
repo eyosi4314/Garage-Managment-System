@@ -1,0 +1,83 @@
+/* Header.css */
+.site-header {
+  background-color: #f8f9fa; /* Ensure the background color is set */
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1020; /* Ensures the header stays above other content */
+}
+
+/* Top Bar */
+.top-bar {
+  background-color: #007bff; /* Blue background */
+  color: white;
+}
+
+.top-bar .container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar .left-column {
+  display: flex;
+  align-items: center;
+}
+
+.top-bar .text,
+.top-bar .office-hour {
+  margin-right: 1rem;
+}
+
+.top-bar .right-column {
+  display: flex;
+  align-items: center;
+}
+
+.top-bar .phone-number {
+  font-weight: bold;
+}
+
+/* Nav links (Home, About, Services, Contact) */
+.nav-link {
+  color: #0d6efd; /* primary blue */
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for nav links */
+.nav-link:hover {
+  color: #0b5ed7 !important; /* slightly darker blue */
+  text-decoration: none;
+  transform: scale(1.05) !important; /* subtle zoom effect for attractiveness */
+}
+
+/* Dropdown toggle icon (user icon) */
+#dropdown-avatar {
+  color: #0d6efd;
+  transition: color 0.3s ease, transform 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+/* Hover effect for user icon */
+#dropdown-avatar:hover {
+  color: #0b5ed7 !important;
+  transform: scale(1.1); /* subtle grow effect */
+}
+
+/* Dropdown menu items */
+.custom-dropdown .dropdown-item {
+  color: #0d6efd;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for dropdown items */
+.custom-dropdown .dropdown-item:hover {
+  background-color: #e7f1ff !important; /* light blue background */
+  color: #0b5ed7 !important; /* darker blue text */
+}
+
+

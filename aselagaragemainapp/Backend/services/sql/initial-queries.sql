@@ -49,6 +49,18 @@ CREATE TABLE IF NOT EXISTS `common_services` (
   PRIMARY KEY (service_id)
 ) ENGINE=InnoDB;
 
+-- the correct sql qury of common service i will change it later when i will add the price to the service
+-- CREATE TABLE IF NOT EXISTS `common_services` (
+--   `service_id` int(11) NOT NULL AUTO_INCREMENT,
+--   `service_name` varchar(255) NOT NULL,
+--   `service_description` TEXT,
+--   `service_price` DECIMAL(10,2) NOT NULL,
+--   `createdBy` INT NOT NULL,
+--   `active` TINYINT(1) DEFAULT 1 NOT NULL,
+--   PRIMARY KEY (service_id)
+-- ) ENGINE=InnoDB;
+
+
 
 -- Employee tables 
 CREATE TABLE IF NOT EXISTS `employee` (

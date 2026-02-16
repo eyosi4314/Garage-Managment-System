@@ -31,7 +31,7 @@ async function logIn(req, res, next) {
     const token = jwt.sign(payload, jwtSecret, {
       expiresIn: "24h",
     });
-    console.log(token); // Log the generated token to the console
+    // console.log(token); // Log the generated token to the console
     const sendBack = {
       employee_token: token,
     };
@@ -43,7 +43,49 @@ async function logIn(req, res, next) {
   } catch (error) {}
 }
 
+// A function handle customer login
+async function CustomerlogIn(req, res, next) {
+  try {
+    const CustomerData = req.body;
+    // Call the logIn method from the login service
+    const customer = await loginService.logInCustomer(CustomerData);
+    // If the employee is not found
+    if (customer.status === "fail") {
+     return res.status(403).json({
+        status: customer.status,
+        message: customer.message,
+      });
+
+      console.log("LOGIN ROUTE HIT");
+      console.log(customer.message);
+    }
+    // If successful, send a response to the client
+    const payload = {
+      customer_id: customer.data.customer_id,
+      customer_email: customer.data.customer_email,
+    };
+    const token = jwt.sign(payload, jwtSecret, {
+      expiresIn: "24h",
+    });
+    console.log(token); // Log the generated token to the console
+    const sendBack = {
+      customer_token:token,
+    };
+    console.log(sendBack);
+    res.status(200).json({
+      status: "success",
+      message: "Customer logged in successfully",
+      data: sendBack,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
 // Export the functions
 module.exports = {
   logIn,
+  CustomerlogIn,
 };

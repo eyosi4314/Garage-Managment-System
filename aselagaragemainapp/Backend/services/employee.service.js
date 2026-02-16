@@ -71,7 +71,14 @@ async function getEmployeeByEmail(employee_email) {
   return rows;
 }
 
-// Example of the employee object that is passed to the createEmployee function
+
+// A function to get all employees
+async function getAllEmployees() {
+  const query = "SELECT * FROM employee INNER JOIN employee_info ON employee.employee_id = employee_info.employee_id INNER JOIN employee_role ON employee.employee_id = employee_role.employee_id INNER JOIN company_roles ON employee_role.company_role_id = company_roles.company_role_id ORDER BY employee.employee_id DESC limit 10";
+  const rows = await conn.query(query);
+  return rows;
+}
+// Example of the employee object that is passed to the createEmployee function on development
 // {
 //    "employee_email": "test@test.com",
 //    "employee_first_name": "Test",
@@ -88,4 +95,5 @@ module.exports = {
   checkIfEmployeeExists,
   createEmployee,
   getEmployeeByEmail,
+  getAllEmployees,
 };

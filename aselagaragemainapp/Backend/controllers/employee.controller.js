@@ -2,6 +2,8 @@
 const employeeService = require("../services/employee.service");
 // Create the add employee controller
 async function createEmployee(req, res, next) {
+
+  // console.log(req.headers);
   // Check if employee email already exists in the database
   const employeeExists = await employeeService.checkIfEmployeeExists(
     req.body.employee_email,
@@ -33,7 +35,27 @@ async function createEmployee(req, res, next) {
     }
   }
 }
-// Export the createEmployee controller
+
+
+// Create the getAllEmployees controller 
+async function getAllEmployees(req, res, next) {
+  // Call the getAllEmployees method from the employee service 
+  const employees = await employeeService.getAllEmployees();
+  // console.log(employees);
+  if (!employees) {
+    res.status(400).json({
+      error: "Failed to get all employees!"
+    });
+  } else {
+    res.status(200).json({
+      status: "success",
+      data: employees,
+    });
+  }
+}
+
+// Export the createEmployee and getAllEmployees controllers
 module.exports = {
   createEmployee,
+  getAllEmployees
 };

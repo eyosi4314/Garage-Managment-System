@@ -8,6 +8,8 @@ const dbConfig = {
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
+  //waitForConnections: true,
+  waitForConnections: true,
 }
 // Create the connection pool
 const pool = mysql.createPool(dbConfig);
