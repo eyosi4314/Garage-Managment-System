@@ -12,16 +12,20 @@ import Footer from "./markup/components/Footer/Footer";
 
 
 // import the admin pages
+import AdminDashbord from "./markup/pages/admin/AdminDashboard";
 import AddEmployee from "./markup/pages/admin/addemployee";
 import Addcustomer from "./Markup/pages/admin/Addcustomer";
+import AddServices from "./markup/components/admin/AddService/AddService";
+import ServiceList from "./markup/components/admin/ServiceList/ServiceList";
+import Customers from "../src/markup/pages/admin/Customers";
+import Employees from "../src/markup/pages/admin/Employees";
 // import AddCustomerForm from "./Markup/Components/Admin/AddCustomer/AddCustomerForm";
 
 import Unauthorized from "../src/markup/pages/Unauthorized";
 import PrivateAuthRoute from "../src/markup/components/Auth/PrivateAuthRoute";
 // // import orders customers employees pages
 import Orders from "../src/markup/pages/admin/Orders";
-import Customers from "../src/markup/pages/admin/Customers";
-import Employees from "../src/markup/pages/admin/Employees";
+
 // // Import the css files
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -39,7 +43,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="/admin/employees" element={<Employees />} />
 
         <Route
           path="/admin/orders"
@@ -51,19 +54,30 @@ function App() {
           }
         />
         <Route
+          path="/admin/add-service"
+          element={
+            <PrivateAuthRoute roles={[2, 3]}>
+              {" "}
+              <AddServices />
+            </PrivateAuthRoute>
+          }
+        />
+        <Route
+          path="/admin/services"
+          element={
+            <PrivateAuthRoute roles={[2, 3]}>
+              {" "}
+              <ServiceList />
+            </PrivateAuthRoute>
+          }
+        />
+
+        <Route
           path="/admin/customers"
           element={
             <PrivateAuthRoute roles={[2, 3]}>
               {" "}
               <Customers />
-            </PrivateAuthRoute>
-          }
-        />
-        <Route
-          path="/admin/add-employee"
-          element={
-            <PrivateAuthRoute roles={[3]}>
-              <AddEmployee />
             </PrivateAuthRoute>
           }
         />
@@ -75,9 +89,36 @@ function App() {
             </PrivateAuthRoute>
           }
         />
+
+        <Route
+          path="/admin/employees"
+          element={
+            <PrivateAuthRoute roles={[2, 3]}>
+              <Employees />
+            </PrivateAuthRoute>
+          }
+        />
+
+        <Route
+          path="/admin/add-employee"
+          element={
+            <PrivateAuthRoute roles={[3]}>
+              <AddEmployee />
+            </PrivateAuthRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <PrivateAuthRoute roles={[3]}>
+              <AdminDashbord />
+            </PrivateAuthRoute>
+          }
+        />
+
         {/* pages */}
-        <Route path="/contact" element={<Contact/>} />
-        <Route path="/about" element={<About/>} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         <Route path="/services" element={<Service />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

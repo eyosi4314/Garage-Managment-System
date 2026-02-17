@@ -54,8 +54,28 @@ async function getAllEmployees(req, res, next) {
   }
 }
 
+// Create the getEmployeeStats controller
+async function getEmployeeStats(req, res, next) {
+
+  const stats = await employeeService.getEmployeeStats();
+
+  if (!stats) {
+    res.status(400).json({
+      error: "Failed to get employee stats!"
+    });
+  } else {
+    res.status(200).json({
+      status: "success",
+      data: stats,
+    });
+  }
+}
+
+
+
 // Export the createEmployee and getAllEmployees controllers
 module.exports = {
   createEmployee,
-  getAllEmployees
+  getAllEmployees,
+  getEmployeeStats,
 };

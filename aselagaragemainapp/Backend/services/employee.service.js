@@ -63,6 +63,32 @@ async function createEmployee(employee) {
   return createdEmployee;
 }
 
+// Create the getEmployeeStats service
+async function getEmployeeStats() {
+
+  const employees = await getAllEmployees();
+
+  if (!employees) {
+    return null;
+  }
+
+  const totalEmployees = employees.length;
+
+  const activeEmployees = employees.filter(
+    emp => emp.employee_status === "active"
+  ).length;
+
+  const inactiveEmployees = employees.filter(
+    emp => emp.employee_status === "inactive"
+  ).length;
+
+  return {
+    activeEmployees,
+    inactiveEmployees,
+    totalEmployees
+  };
+}
+
 // A function to get employee by email
 async function getEmployeeByEmail(employee_email) {
   const query =
@@ -96,4 +122,5 @@ module.exports = {
   createEmployee,
   getEmployeeByEmail,
   getAllEmployees,
+  getEmployeeStats,
 };

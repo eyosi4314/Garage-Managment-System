@@ -1,9 +1,8 @@
 import React from "react";
 import AdminMenu from "../../components/admin/AdminMenu/AdminMenu";
-import CustomersList from "../../components/admin/CustomerList/CustomerList";
-// import CustomerEdit from "../../components/admin/CustomerEdit/CustomerEdit";
+import ServiceList from "../../components/admin/ServiceList/ServiceList";
 
-function Customers() {
+function ViewServices() {
   return (
     <>
       <div className="container-fluid admin-pages">
@@ -12,8 +11,7 @@ function Customers() {
             <AdminMenu />
           </div>
           <div className="col-md-9 admin-right-side">
-            <CustomersList />
-            {/* <CustomerEdit /> */}
+            <ServiceList />
           </div>
         </div>
       </div>
@@ -21,4 +19,4 @@ function Customers() {
   );
 }
 
-export default Customers;
+export default ViewServices;
