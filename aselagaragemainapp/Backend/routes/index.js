@@ -27,7 +27,7 @@ router.use(loginRoutes);
 // Add the vehicle routes to the main router
 router.use(vehicleRouter);
 // Add the order routes to the main router
-router.use(orderRouter);
+// router.use(orderRouter);
 // Add the service routes to the main router
 router.use(serviceRouter);
 // Export the router
